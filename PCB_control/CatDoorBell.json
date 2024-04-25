@@ -1,0 +1,420 @@
+{
+  "Commands": [
+    {
+      "Command": "get_config",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "get_status",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "help",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "reset",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "device_name",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Device name",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "autoreport",
+      "DefaultValue": "UART,TELEGRAM",
+      "CustomValue": "TELEGRAM",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Autoreport channels",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "autoreport_always",
+      "DefaultValue": "",
+      "CustomValue": "UART",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Autoreport always channels",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "set_time",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Time",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "wifi_mode",
+      "DefaultValue": "STATION",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi mode",
+      "ParameterDescription": "wifi_mode"
+    },
+    {
+      "Command": "sta_ssid",
+      "DefaultValue": "your_wifi",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi STA SSID",
+      "ParameterDescription": "sta_ssid"
+    },
+    {
+      "Command": "sta_pass",
+      "DefaultValue": "your_wifi_pass",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi STA password",
+      "ParameterDescription": "sta_pass"
+    },
+    {
+      "Command": "ap_ssid",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi AP SSID",
+      "ParameterDescription": "ap_ssid"
+    },
+    {
+      "Command": "ap_pass",
+      "DefaultValue": "12345678",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi AP password",
+      "ParameterDescription": "ap_pass"
+    },
+    {
+      "Command": "wifi_power",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi power",
+      "ParameterDescription": "wifi_power"
+    },
+    {
+      "Command": "wifi_enable",
+      "DefaultValue": "1",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "WiFi service",
+      "ParameterDescription": "wifi_enable"
+    },
+    {
+      "Command": "ntp_server",
+      "DefaultValue": "time.nist.gov",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "NTP server",
+      "ParameterDescription": "ntp_server"
+    },
+    {
+      "Command": "ntp_refresh_delay",
+      "DefaultValue": "60",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "NTP refresh delay",
+      "ParameterDescription": "ntp_refresh_delay"
+    },
+    {
+      "Command": "ntp_refresh_period",
+      "DefaultValue": "86400",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "NTP refresh period",
+      "ParameterDescription": "ntp_refresh_period"
+    },
+    {
+      "Command": "ntp_time_zone",
+      "DefaultValue": "+3",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "NTP time zone",
+      "ParameterDescription": "ntp_time_zone"
+    },
+    {
+      "Command": "ntp_enable",
+      "DefaultValue": "1",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "NTP service",
+      "ParameterDescription": "ntp_enable"
+    },
+    {
+      "Command": "ota_port",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "OTA port",
+      "ParameterDescription": "display_refresh"
+    },
+    {
+      "Command": "ota_pass",
+      "DefaultValue": "12345678",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "OTA password",
+      "ParameterDescription": "display_refresh"
+    },
+    {
+      "Command": "ota_enable",
+      "DefaultValue": "1",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "OTA service",
+      "ParameterDescription": "display_refresh"
+    },
+    {
+      "Command": "mqtt_server",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT server",
+      "ParameterDescription": "mqtt_server"
+    },
+    {
+      "Command": "mqtt_port",
+      "DefaultValue": "1883",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT port",
+      "ParameterDescription": "mqtt_port"
+    },
+    {
+      "Command": "mqtt_login",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT login",
+      "ParameterDescription": "mqtt_login"
+    },
+    {
+      "Command": "mqtt_pass",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT password",
+      "ParameterDescription": "mqtt_pass"
+    },
+    {
+      "Command": "mqtt_id",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT ID",
+      "ParameterDescription": "mqtt_id"
+    },
+    {
+      "Command": "mqtt_topic_in",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT receive topic",
+      "ParameterDescription": "mqtt_topic_in"
+    },
+    {
+      "Command": "mqtt_topic_out",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT post topic",
+      "ParameterDescription": "mqtt_topic_out"
+    },
+    {
+      "Command": "mqtt_clean",
+      "DefaultValue": "1",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT clean session",
+      "ParameterDescription": "mqtt_clean"
+    },
+    {
+      "Command": "mqtt_enable",
+      "DefaultValue": "0",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT service",
+      "ParameterDescription": "mqtt_enable"
+    },
+    {
+      "Command": "send_mqtt",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "MQTT sent",
+      "ParameterDescription": "send_mqtt"
+    },
+    {
+      "Command": "telegram_token",
+      "DefaultValue": "********:*****************************",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "TELEGRAM token",
+      "ParameterDescription": "telegram_token"
+    },
+    {
+      "Command": "telegram_user0",
+      "DefaultValue": "000000000",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Telegram user #",
+      "ParameterDescription": "telegram_user"
+    },
+    {
+      "Command": "telegram_enable",
+      "DefaultValue": "1",
+      "CustomValue": "0",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Telegram service",
+      "ParameterDescription": "telegram_enable"
+    },
+    {
+      "Command": "send_telegram",
+      "DefaultValue": "",
+      "CustomValue": "0, test",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Telegram sent",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user0",
+      "DefaultValue": "e6:2a:b0:6a:c8:e5",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user #",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user_desc0",
+      "DefaultValue": "Bare PCB",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user description #",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user_rssi0",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user RSSI #",
+      "ParameterDescription": "BLE user 1m. calibrated RSSI"
+    },
+    {
+      "Command": "ble_user1",
+      "DefaultValue": "e3:68:a1:fc:1e:a8",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user #",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user_desc1",
+      "DefaultValue": "White token",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user description #",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user_rssi1",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user RSSI #",
+      "ParameterDescription": "BLE user 1m. calibrated RSSI"
+    },
+    {
+      "Command": "ble_user2",
+      "DefaultValue": "20:22:07:01:00:2b",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user #",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user_desc2",
+      "DefaultValue": "Blue button",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user description #",
+      "ParameterDescription": "send_telegram"
+    },
+    {
+      "Command": "ble_user_rssi2",
+      "DefaultValue": "",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE user RSSI #",
+      "ParameterDescription": "BLE user 1m. calibrated RSSI"
+    },
+    {
+      "Command": "ble_report_distance",
+      "DefaultValue": "100",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE report distance",
+      "ParameterDescription": "distance cm."
+    },
+    {
+      "Command": "ble_report_delay",
+      "DefaultValue": "60",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "BLE report delay",
+      "ParameterDescription": "delay sec."
+    },
+    {
+      "Command": "light_pin",
+      "DefaultValue": "0",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Light pin",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "buzzer_pin",
+      "DefaultValue": "0",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Buzzer pin",
+      "ParameterDescription": ""
+    },
+    {
+      "Command": "alarm_delay",
+      "DefaultValue": "5",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Alarm delay",
+      "ParameterDescription": "sec."
+    },
+    {
+      "Command": "alarm_freq",
+      "DefaultValue": "3000",
+      "CustomValue": "",
+      "ErrorReplyString": "Incorrect ",
+      "ParameterName": "Alarm frequency",
+      "ParameterDescription": "kHz."
+    }
+  ]
+}
