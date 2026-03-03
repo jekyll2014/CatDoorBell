@@ -28,8 +28,8 @@ uint32_t bleAlarmDelay = 3 * 1000; //3 sec. by default
 uint32_t bleAlarmEndTime = 0;
 uint32_t bleAlarmFreq = 3000; //3kHz by default
 bool bleAlarmStarted = false;
-uint8_t buzzerPin = 0;
-uint8_t lightPin = 0;
+uint8_t buzzerPin = 12;
+uint8_t lightPin = 13;
 
 String bleUsers[BLE_USERS_NUMBER];
 BleTokenReport bleUsersReports[BLE_USERS_NUMBER];
@@ -701,9 +701,6 @@ void setup()
 
 	lightPin = readConfigString(LIGHT_PIN_addr, LIGHT_PIN_size).toInt();
 	init_light_pin();
-	/*ledcSetup(LIGHT_PWM_CHANNEL + PWM_CHANNEL_OFFSET, 500, PWM_RESOLUTION);
-	ledcAttachPin(lightPin, LIGHT_PWM_CHANNEL + PWM_CHANNEL_OFFSET); // Attach the LED PWM Channel to the GPIO Pin
-	set_output(LIGHT_PWM_CHANNEL, 0);*/
 
 	buzzerPin = readConfigString(BUZZER_PIN_addr, BUZZER_PIN_size).toInt();
 	init_buzzer_pin();
@@ -859,6 +856,7 @@ void loop()
 						{
 							Serial.println(str);
 						}
+#ifdef MQTT_ENABLE
 						else if (b == CHANNEL_MQTT && mqttEnable)
 						{
 							mqtt_connect();
@@ -867,6 +865,8 @@ void loop()
 							mqtt_send(str, str.length(), topic);
 							mqtt_client.disconnect();
 						}
+#endif
+#ifdef TELEGRAM_ENABLE
 						else if (b == CHANNEL_TELEGRAM && telegramEnable)
 						{
 							for (int n = 0; n < TELEGRAM_USERS_NUMBER; n++)
@@ -879,6 +879,7 @@ void loop()
 								yield();
 							}
 						}
+#endif
 					}
 					yield();
 				}
@@ -895,6 +896,7 @@ void loop()
 					{
 						Serial.println(str);
 					}
+#ifdef MQTT_ENABLE
 					else if (b == CHANNEL_MQTT && mqttEnable)
 					{
 						if (!mqtt_client.connected())
@@ -909,6 +911,8 @@ void loop()
 						String topic = "";
 						mqtt_send(str, str.length(), topic);
 					}
+#endif
+#ifdef TELEGRAM_ENABLE
 					else if (b == CHANNEL_TELEGRAM && telegramEnable)
 					{
 						for (int n = 0; n < TELEGRAM_USERS_NUMBER; n++)
@@ -921,6 +925,7 @@ void loop()
 							yield();
 						}
 					}
+#endif
 				}
 				yield();
 			}
@@ -1021,7 +1026,7 @@ void loop()
 	yield();
 }
 
-IRAM_ATTR void onExtButton()
+ARDUINO_ISR_ATTR void onExtButton()
 {
 	//sending = !sending;
 }
@@ -2404,10 +2409,12 @@ String printStatus(bool toJson = false)
 	str += delimiter;
 #endif // VBAT_ADC
 
+#ifdef MQTT_ENABLE
 	str += F("MQTT connected");
 	str += eq;
 	str += String(mqtt_client.connected());
 	str += delimiter;
+#endif
 
 	if (toJson)
 		str += F("\"}");
@@ -2693,9 +2700,8 @@ void init_light_pin()
 
 void init_buzzer_pin()
 {
-	ledcSetup(BUZZER_PWM_CHANNEL + PWM_CHANNEL_OFFSET, 10000, PWM_RESOLUTION);
-	ledcAttachPin(buzzerPin, BUZZER_PWM_CHANNEL + PWM_CHANNEL_OFFSET); // Attach the LED PWM Channel to the GPIO Pin
-	set_output(BUZZER_PWM_CHANNEL, 0);
+	ledcSetup(BUZZER_PWM_CHANNEL + PWM_CHANNEL_OFFSET, PWM_CHANNEL_FREQ, PWM_RESOLUTION);
+	set_output(buzzerPin, 0);
 }
 
 void set_output(uint8_t pwmChannelNum, int outValue)

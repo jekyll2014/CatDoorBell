@@ -34,7 +34,7 @@
     },
     {
       "Command": "device_name",
-      "DefaultValue": "",
+      "DefaultValue": "CatDoorBell",
       "CustomValue": "",
       "ErrorReplyString": "Incorrect ",
       "ParameterName": "Device name",
@@ -75,7 +75,7 @@
     {
       "Command": "sta_ssid",
       "DefaultValue": "your_wifi",
-      "CustomValue": "",
+      "CustomValue": "jekyll3",
       "ErrorReplyString": "Incorrect ",
       "ParameterName": "WiFi STA SSID",
       "ParameterDescription": "sta_ssid"
@@ -83,7 +83,7 @@
     {
       "Command": "sta_pass",
       "DefaultValue": "your_wifi_pass",
-      "CustomValue": "",
+      "CustomValue": "abnbkm090780",
       "ErrorReplyString": "Incorrect ",
       "ParameterName": "WiFi STA password",
       "ParameterDescription": "sta_pass"
@@ -106,7 +106,7 @@
     },
     {
       "Command": "wifi_power",
-      "DefaultValue": "",
+      "DefaultValue": "19.5",
       "CustomValue": "",
       "ErrorReplyString": "Incorrect ",
       "ParameterName": "WiFi power",
@@ -386,7 +386,7 @@
     },
     {
       "Command": "light_pin",
-      "DefaultValue": "0",
+      "DefaultValue": "13",
       "CustomValue": "",
       "ErrorReplyString": "Incorrect ",
       "ParameterName": "Light pin",
@@ -394,7 +394,7 @@
     },
     {
       "Command": "buzzer_pin",
-      "DefaultValue": "0",
+      "DefaultValue": "12",
       "CustomValue": "",
       "ErrorReplyString": "Incorrect ",
       "ParameterName": "Buzzer pin",

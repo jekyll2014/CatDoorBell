@@ -16,7 +16,7 @@ ESP32 active at boot:
 GPIO 1  - Sends the ESP32 boot logs via the UART
 GPIO 3  - 3.3V voltage at boot time
 GPIO 5  - Sends a PWM signal at boot time
-GPIO 6-11 - connected to the ESP32 integrated SPI flash memory – not recommended to use).
+GPIO 6-11 - connected to the ESP32 integrated SPI flash memory ï¿½ not recommended to use).
 GPIO 14 - Sends a PWM signal at boot time
 GPIO 15 - Sends the ESP32 boot logs via the UART
 
@@ -40,7 +40,7 @@ GPIO 19 (input disabled, pull-up resistor enabled)
 
 #define OTA_UPDATE_ENABLE
 #define NTP_TIME_ENABLE
-#define MQTT_ENABLE
+//#define MQTT_ENABLE
 #define TELEGRAM_ENABLE
 
 //TELEGRAM
