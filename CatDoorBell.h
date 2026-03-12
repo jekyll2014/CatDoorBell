@@ -49,10 +49,7 @@ ARDUINO_ISR_ATTR void onExtButton();
 // PWM Outputs
 #define PWM_RESOLUTION									10 // 10 bits
 #define PWM_CHANNEL_FREQ								10000 // to avoid messing with 3rd party libraries PWM channel usage
-#define PWM_CHANNEL_OFFSET								0 // to avoid messing with 3rd party libraries PWM channel usage
 const int MAX_DUTY_CYCLE = (int)(pow(2, PWM_RESOLUTION) - 1);
-#define LIGHT_PWM_CHANNEL									0 // PWM channel#
-#define BUZZER_PWM_CHANNEL									1 // PWM channel#
 
 // Wi-Fi
 String getStaSsid();
@@ -150,7 +147,7 @@ String CompactMac();
 void i2c_scan();
 unsigned int crc16(unsigned char*, int);
 void init_light_pin();
-void init_buzzer_pin();
+void init_buzzer_pin(uint8_t);
 void set_output(uint8_t, int);
 void esp32Tone(uint8_t, uint32_t);
 void esp32NoTone(uint8_t);

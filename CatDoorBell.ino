@@ -21,7 +21,7 @@ uint8_t wifi_mode = WIFI_OFF;
 bool wifiEnable = true;
 
 bool bleEnable = true;
-uint8_t bleReportDistance = 200; // 100 cm. by default
+uint8_t bleReportDistance = 200; // 200 cm. by default
 uint32_t bleReportDelay = 60 * 1000; // after 1 minute by default
 uint32_t bleReportEndTime = 0;
 uint32_t bleAlarmDelay = 3 * 1000; //3 sec. by default
@@ -33,8 +33,8 @@ uint8_t lightPin = 13;
 
 String bleUsers[BLE_USERS_NUMBER];
 BleTokenReport bleUsersReports[BLE_USERS_NUMBER];
-uint8_t reportReadPosition = 0;
-uint8_t reportWritePosition = 0;
+volatile uint8_t reportReadPosition = 0;
+volatile uint8_t reportWritePosition = 0;
 
 bool uartReady = false;
 String uartCommand = "";
@@ -604,7 +604,7 @@ void setup()
 #ifdef TELEGRAM_ENABLE
 	for (uint8_t b = 0; b < TELEGRAM_MESSAGE_BUFFER_SIZE; b++)
 	{
-		telegramOutboundBuffer[0].message.reserve(TELEGRAM_MESSAGE_MAX_SIZE);
+		telegramOutboundBuffer[b].message.reserve(TELEGRAM_MESSAGE_MAX_SIZE);
 		yield();
 	}
 #endif
@@ -703,7 +703,7 @@ void setup()
 	init_light_pin();
 
 	buzzerPin = readConfigString(BUZZER_PIN_addr, BUZZER_PIN_size).toInt();
-	init_buzzer_pin();
+	init_buzzer_pin(buzzerPin);
 
 	// start BlueTooth
 	if (!BLE.begin())
@@ -801,7 +801,8 @@ void loop()
 		if (calibratedPower == 0)
 		{
 			//Serial.println(F("Token RSSI calibration set to default"));
-			calibratedPower = -63.0f; // default value
+			// Use standard BLE beacon calibration value at 1 meter
+			calibratedPower = -59.0f; // standard default value for most BLE beacons
 		}
 
 		str += F("Calibrated_1m_Power");
@@ -809,7 +810,14 @@ void loop()
 		str += String(calibratedPower, 2);
 		str += delimiter;
 
-		uint16_t distance = pow(10, ((calibratedPower - report.rssi) / (10.0f * 2.0f))) * 100;
+		// Calculate distance with overflow protection
+		// Using path loss formula: distance = 10^((TxPower - RSSI) / (10 * n)) where n=2 (free space)
+		float distanceMeters = pow(10.0f, ((calibratedPower - report.rssi) / (10.0f * 2.0f)));
+		uint32_t distance = (uint32_t)(distanceMeters * 100.0f); // Convert to cm
+		// Cap distance at reasonable maximum (65 meters)
+		if (distance > 6500)
+			distance = 6500;
+
 		str += F("Distance");
 		str += eq;
 		str += String(distance);
@@ -843,7 +851,7 @@ void loop()
 
 			// activate buzzer
 			if (buzzerPin > 0)
-				esp32Tone(BUZZER_PWM_CHANNEL, bleAlarmFreq);
+				esp32Tone(buzzerPin, bleAlarmFreq);
 
 			// report to server
 			if (autoReport > 0)
@@ -944,19 +952,19 @@ void loop()
 
 		if (buzzerPin > 0)
 		{
-			esp32NoTone(BUZZER_PWM_CHANNEL);
+			esp32NoTone(buzzerPin);
 		}
 	}
 
-	// reset report delay 
-	if (bleReportEndTime != 0 && millis() > bleReportEndTime)
+	// reset report delay (rollover-safe comparison)
+	if (bleReportEndTime != 0 && (long)(millis() - bleReportEndTime) >= 0)
 	{
 		bleReportEndTime = 0;
 	}
 
 #ifdef NTP_TIME_ENABLE
-	//refersh NTP time if time has come
-	if (NTPenable && millis() - lastTimeRefersh > timeRefershPeriod)
+	//refresh NTP time if time has come (rollover-safe comparison)
+	if (NTPenable && (long)(millis() - lastTimeRefersh) > (long)timeRefershPeriod)
 	{
 		restartNTP();
 	}
@@ -1015,8 +1023,8 @@ void loop()
 #endif
 		yield();
 #ifdef TELEGRAM_ENABLE
-		//check TELEGRAM for data
-		if (telegramEnable && WiFi.getMode() != WIFI_AP && millis() - telegramLastTime > TELEGRAM_MESSAGE_DELAY)
+		//check TELEGRAM for data (rollover-safe comparison)
+		if (telegramEnable && WiFi.getMode() != WIFI_AP && (long)(millis() - telegramLastTime) > TELEGRAM_MESSAGE_DELAY)
 		{
 			sendBufferToTelegram();
 			telegramLastTime = millis();
@@ -1189,7 +1197,8 @@ void writeConfigFloat(uint16_t startAt, float data)
 uint16_t calculateEepromCrc()
 {
 	uint16_t crc = 0xffff;
-	for (int i = 0; i < FINAL_CRC_addr + FINAL_CRC_size; i++)
+	// Calculate CRC excluding the CRC storage area itself
+	for (int i = 0; i < FINAL_CRC_addr; i++)
 	{
 		uint8_t b = EEPROM.read(i);
 		crc ^= b;
@@ -1248,13 +1257,14 @@ void refreshEepromCrc()
 
 void clearEeprom()
 {
-	/*for (uint32_t i = 0; i < EEPROM.length(); i++)
-	{
-		EEPROM.write(i, 0);
-		yield();
-	}
-	EEPROM.commit();
-	refreshEepromCrc();*/
+	// Intentionally empty - CRC validation handles initialization
+	// If you need to manually clear EEPROM, uncomment the code below:
+	// for (uint32_t i = 0; i < EEPROM.length(); i++) {
+	//   EEPROM.write(i, 0);
+	//   yield();
+	// }
+	// EEPROM.commit();
+	// refreshEepromCrc();
 }
 
 String getBleUser(uint8_t n)
@@ -2698,13 +2708,13 @@ void init_light_pin()
 	digitalWrite(lightPin, LOW);
 }
 
-void init_buzzer_pin()
+void init_buzzer_pin(uint8_t pwm_output_pin)
 {
-	ledcSetup(BUZZER_PWM_CHANNEL + PWM_CHANNEL_OFFSET, PWM_CHANNEL_FREQ, PWM_RESOLUTION);
-	set_output(buzzerPin, 0);
+	ledcAttach(pwm_output_pin, PWM_CHANNEL_FREQ, PWM_RESOLUTION);
+	set_output(pwm_output_pin, 0);
 }
 
-void set_output(uint8_t pwmChannelNum, int outValue)
+void set_output(uint8_t pwm_output_pin, int outValue)
 {
 	if (outValue < 0)
 		outValue = 0;
@@ -2712,15 +2722,15 @@ void set_output(uint8_t pwmChannelNum, int outValue)
 	if (outValue > MAX_DUTY_CYCLE)
 		outValue = MAX_DUTY_CYCLE;
 
-	ledcWrite(pwmChannelNum + PWM_CHANNEL_OFFSET, outValue);
+	ledcWrite(pwm_output_pin, outValue);
 }
 
-void esp32Tone(uint8_t pwmChannelNum, uint32_t freq)
+void esp32Tone(uint8_t pwm_output_pin, uint32_t freq)
 {
-	ledcWriteTone(pwmChannelNum, freq);    // channel, frequency
+	ledcWriteTone(pwm_output_pin, freq);    // channel, frequency
 }
 
-void esp32NoTone(uint8_t pwmChannelNum)
+void esp32NoTone(uint8_t pwm_output_pin)
 {
-	ledcWriteTone(pwmChannelNum, 0);
+	ledcWriteTone(pwm_output_pin, 0);
 }
